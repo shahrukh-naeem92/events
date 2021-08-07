@@ -6,6 +6,9 @@ use App\Models\Comment;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class User extends Authenticatable
 {
@@ -44,7 +47,7 @@ class User extends Authenticatable
     /**
      * The comments that belong to the user.
      */
-    public function comments()
+    public function comments() : HasMany
     {
         return $this->hasMany(Comment::class);
     }
@@ -52,7 +55,7 @@ class User extends Authenticatable
     /**
      * The lessons that a user has access to.
      */
-    public function lessons()
+    public function lessons() : BelongsToMany
     {
         return $this->belongsToMany(Lesson::class);
     }
@@ -60,8 +63,16 @@ class User extends Authenticatable
     /**
      * The lessons that a user has watched.
      */
-    public function watched()
+    public function watched() : BelongsToMany
     {
         return $this->belongsToMany(Lesson::class)->wherePivot('watched', true);
+    }
+
+    /**
+     * The badge that belong to the user.
+     */
+    public function badge() : HasOne
+    {
+        return $this->hasOne(Badge::class);
     }
 }

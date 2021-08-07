@@ -2,12 +2,11 @@
 
 namespace App\Models;
 
-use App\Models\User;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Comment extends Model
+class Badge extends Model
 {
     use HasFactory;
 
@@ -17,8 +16,9 @@ class Comment extends Model
      * @var array
      */
     protected $fillable = [
-        'body',
-        'user_id'
+        'name',
+        'order',
+        'no_of_achievements'
     ];
 
     /**
