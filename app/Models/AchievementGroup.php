@@ -4,8 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Badge extends Model
+class AchievementGroup extends Model
 {
     use HasFactory;
 
@@ -16,7 +17,13 @@ class Badge extends Model
      */
     protected $fillable = [
         'name',
-        'order',
-        'no_of_achievements'
     ];
+
+    /**
+     * The achievements that belong to the group.
+     */
+    public function achievements() : HasMany
+    {
+        return $this->hasMany(Achievements::class);
+    }
 }

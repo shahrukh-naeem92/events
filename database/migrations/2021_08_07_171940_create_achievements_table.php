@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateBadgesTable extends Migration
+class CreateAchievementsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,14 @@ class CreateBadgesTable extends Migration
      */
     public function up() : void
     {
-        Schema::create('badges', function (Blueprint $table) {
+        Schema::create('achievements', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->tinyInteger('required_number_of_tasks');
+            $table->unsignedBigInteger('achievement_group_id');
             $table->tinyInteger('order');
-            $table->integer('no_of_achievements');
             $table->timestamps();
-        });
-
-        Schema::table('users', function (Blueprint $table) {
-            $table->foreignId('badge_id')->constrained();
+            $table->foreign('achievement_group_id')->references('id')->on('achievement_group');
         });
     }
 
@@ -33,11 +31,6 @@ class CreateBadgesTable extends Migration
      */
     public function down() : void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropForeign('users_badge_id_foreign');
-            $table->dropColumn('badge_id');
-        });
-
-        Schema::dropIfExists('badges');
+        Schema::dropIfExists('achievements');
     }
 }
